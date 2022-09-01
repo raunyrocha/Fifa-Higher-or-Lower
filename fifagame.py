@@ -40,6 +40,7 @@ def game():
         elif userchoice == "B":
             print(losermsg)
             print(ahigher)
+            endgame()
         else:
             print("Invalid choice. Try again.")
             inputerror()
@@ -54,12 +55,15 @@ def game():
         elif userchoice == "A":
             print(losermsg)
             print(bhigher)
+            endgame()
         else:
             print("Invalid choice. Try again.")
             inputerror()
 
     else:
         print(tied)
+        list_continue.pop(0)
+        list_continue.append(random.choice(playerdata))
         tiedgame()
 
 
@@ -77,6 +81,21 @@ def inputerror():
     game()
 
 inputerror.counter = 0
+
+def endgame():
+    tries = int(game.counter) - 1 - int(inputerror.counter) - int(tiedgame.counter)
+
+    with open("tries.txt", "a+") as ac:
+        # Move read cursor to the start of file.
+        ac.seek(0)
+        # If file is not empty then append '\n'
+        data = ac.read(100)
+        if len(data) > 0 :
+            ac.write("\n")
+        # Append text at the end of file
+        ac.write(str(tries))
+
+    print("Game over. You've lasted {} attempt(s)".format(tries))
 
 
 initiallist()

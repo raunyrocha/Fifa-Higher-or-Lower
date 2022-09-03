@@ -70,19 +70,21 @@ def game():
 game.counter = 0
 
 def tiedgame():
-#this function is called when the overall is tied.
+#this function is called when the overall is tied. Tied games do not count against the overall tries.
     tiedgame.counter += 1
     game()
 
 tiedgame.counter = 0
 
 def inputerror():
+#this function is called when there is a input error. Input error do not count against the overall tries.
     inputerror.counter += 1
     game()
 
 inputerror.counter = 0
 
 def endgame():
+#this prints the end of the game with the number of tries against the average of all players.
     tries = int(game.counter) - 1 - int(inputerror.counter) - int(tiedgame.counter)
 
     with open("tries.txt", "a+") as ac:

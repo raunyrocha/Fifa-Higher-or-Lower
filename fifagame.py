@@ -1,5 +1,6 @@
 import json
 import random
+from datetime import date
 from fgentries import avgtries, Alltries, totalplays
 
 with open('players.json', 'r', encoding="utf-8") as data:
@@ -12,6 +13,7 @@ winnermsg = random.choice(winnerex)
 losermsg = random.choice(loserex)
 
 username = input("Type your name for our scoreboard:\n")
+date = date.today().strftime("%B %d, %Y")
 
 list_continue = []
 
@@ -86,6 +88,8 @@ def inputerror():
 
 inputerror.counter = 0
 
+tries = 0
+
 def endgame():
 #this prints the end of the game with the number of tries against the average of all players.
     tries = int(game.counter) - 1 - int(inputerror.counter) - int(tiedgame.counter)
@@ -104,6 +108,26 @@ def endgame():
 
     print("Game over. {}, you've got {} right.".format(username, tries))
     print("The average attemps of all users is: {}.".format(round(attempts, 2)))
+
+    with open("scoreboard.json", "r") as sb:
+        bdict = json.load(sb)
+        bdict.append({
+            "Name": username,
+            "Score": tries,
+            "Date": date
+        })
+
+    with open("scoreboard.json", 'w') as json_file:
+        json.dump(bdict, json_file,
+                        indent=4,
+                        separators=(',',': '))
+
+    bdict.sort(key=lambda x: x.get('Score'), reverse=True)
+    n = 0
+    for item in bdict:
+        if n < 11:
+            n += 1
+            print("{} - User: {}, Score {}, Date: {}".format(n, item["Name"], item["Score"], item["Date"]))
 
 def main():
     initiallist()

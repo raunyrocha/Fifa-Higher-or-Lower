@@ -1,5 +1,6 @@
 import json
 import random
+from fgentries import avgtries, Alltries, totalplays
 
 with open('players.json', 'r', encoding="utf-8") as data:
     playerdata = json.load(data)
@@ -9,6 +10,8 @@ loserex = ["Wroooong", "You suck at this", "Nice try", "Own goal"]
 
 winnermsg = random.choice(winnerex)
 losermsg = random.choice(loserex)
+
+username = input("Type your name for our scoreboard:\n")
 
 list_continue = []
 
@@ -29,7 +32,7 @@ def game():
     tied = "It's a tie. Try another one."
     question = "Who has the highest overall on fifa 22?\nA - {}, {} from {}\nB - {}, {} from {}".format(A["short_name"], A["player_positions"], A["club_name"], B["short_name"], B["player_positions"], B["club_name"])
     print(question)
-    userchoice = input("What's your choice? Type (A) or (B):\n ").upper()
+    userchoice = input("What's your choice? Type (A) or (B):\n").upper()
     if A["overall"] > B["overall"]:
         if userchoice == "A":
             print(winnermsg)
@@ -87,6 +90,8 @@ def endgame():
 #this prints the end of the game with the number of tries against the average of all players.
     tries = int(game.counter) - 1 - int(inputerror.counter) - int(tiedgame.counter)
 
+    attempts = (int(Alltries) + int(tries)) / (int(totalplays) + 1)
+
     with open("tries.txt", "a+") as ac:
         # Move read cursor to the start of file.
         ac.seek(0)
@@ -97,8 +102,12 @@ def endgame():
         # Append text at the end of file
         ac.write(str(tries))
 
-    print("Game over. You've lasted {} attempt(s)".format(tries))
+    print("Game over. {}, you've got {} right.".format(username, tries))
+    print("The average attemps of all users is: {}.".format(round(attempts, 2)))
 
+def main():
+    initiallist()
+    game()
 
-initiallist()
-game()
+if __name__ == '__main__':
+    main()

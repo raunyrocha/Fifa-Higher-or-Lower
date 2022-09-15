@@ -91,7 +91,7 @@ inputerror.counter = 0
 tries = 0
 
 def endgame():
-#this prints the end of the game with the number of tries against the average of all players.
+#this prints the end of the game with the number of tries against the average of all players, and adds the user to a scoreboard.
     tries = int(game.counter) - 1 - int(inputerror.counter) - int(tiedgame.counter)
 
     attempts = (int(Alltries) + int(tries)) / (int(totalplays) + 1)
@@ -125,7 +125,7 @@ def endgame():
     bdict.sort(key=lambda x: x.get('Score'), reverse=True)
     n = 0
     for item in bdict:
-        if n < 11:
+        if n < 10:
             n += 1
             print("{} - User: {}, Score {}, Date: {}".format(n, item["Name"], item["Score"], item["Date"]))
 

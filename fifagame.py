@@ -1,7 +1,7 @@
 import json
 import random
 from datetime import date
-from fgentries import avgtries, Alltries, totalplays
+from fgentries import avgtries, Alltries, totalpl
 
 with open('players.json', 'r', encoding="utf-8") as data:
     playerdata = json.load(data)
@@ -94,20 +94,7 @@ def endgame():
 #this prints the end of the game with the number of tries against the average of all players, and adds the user to a scoreboard.
     tries = int(game.counter) - 1 - int(inputerror.counter) - int(tiedgame.counter)
 
-    attempts = (int(Alltries) + int(tries)) / (int(totalplays) + 1)
-
-    with open("tries.txt", "a+") as ac:
-        # Move read cursor to the start of file.
-        ac.seek(0)
-        # If file is not empty then append '\n'
-        data = ac.read(100)
-        if len(data) > 0 :
-            ac.write("\n")
-        # Append text at the end of file
-        ac.write(str(tries))
-
-    print("Game over. {}, you've got {} right.".format(username, tries))
-    print("The average attemps of all users is: {}.".format(round(attempts, 2)))
+    attempts = (int(Alltries) + int(tries)) / (int(totalpl) + 1)
 
     with open("scoreboard.json", "r") as sb:
         bdict = json.load(sb)
@@ -116,6 +103,10 @@ def endgame():
             "Score": tries,
             "Date": date
         })
+
+
+    print("Game over. {}, you've got {} right.".format(username, tries))
+    print("The average attemps of all users is: {}.".format(round(attempts, 2)))
 
     with open("scoreboard.json", 'w') as json_file:
         json.dump(bdict, json_file,

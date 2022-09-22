@@ -24,7 +24,7 @@ def Average(l):
     avg = mean(l)
     return avg
 
-Alltries = sum(newlist)
+Alltries = sum(newtries)
 
-averagetries = Average(newlist)
+averagetries = Average(newtries)
 avgtries = round(averagetries, 2)
